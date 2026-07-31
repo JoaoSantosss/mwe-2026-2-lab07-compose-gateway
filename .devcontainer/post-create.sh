@@ -6,6 +6,12 @@ echo "==> Configurando o laboratorio mwe-2026-2-lab07-compose-gateway"
 
 # --- Dependencias da stack -------------------------------------------------
 if [ -f requirements.txt ]; then pip install --user -r requirements.txt; fi
+# A rede e o volume vem da Aula 03 e entram no Compose como external:
+# sem eles o compose up falha com mensagem obscura.
+docker network create logitech-net 2>/dev/null || true
+docker volume create logitech-telemetria >/dev/null 2>&1 || true
+if [ -f .env.exemplo ] && [ ! -f .env ]; then cp .env.exemplo .env; fi
+pip install --user pytest >/dev/null 2>&1 || true
 
 # --- Ollama: SLM rodando dentro do proprio container -----------------------
 # Backend único de IA dos laboratórios, decisão registrada na ADR-005 do

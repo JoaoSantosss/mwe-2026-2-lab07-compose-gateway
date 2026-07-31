@@ -1,23 +1,11 @@
-# Dependencias
-node_modules/
+# Segredos: o .env carrega senha e chave de API, e nunca é commitado.
+# O .env.exemplo, sim, e é ele que documenta quais variáveis existem.
+.env
+
+# Artefatos de execução
 __pycache__/
-*.py[cod]
-.venv/
-venv/
-target/
+*.pyc
+dados/
+node_modules/
 bin/
 obj/
-
-# Ambiente
-.env
-.env.local
-
-# Editor
-.DS_Store
-.idea/
-*.swp
-
-# Build
-dist/
-build/
-*.log
