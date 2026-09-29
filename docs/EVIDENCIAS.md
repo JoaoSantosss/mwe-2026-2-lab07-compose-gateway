@@ -111,14 +111,14 @@ Cole o trecho de `docker compose logs ai-gateway` que mostra o gateway
 caindo do provedor remoto para o local. Ele começa com `[FALLBACK]`:
 
 ```
-FALLBACK_ACIONADO: PREENCHER
+FALLBACK_ACIONADO: [FALLBACK] provedor 'remoto' indisponível (credencial ausente: a variável LOGITECH_IA_REMOTA_CHAVE está vazia, e a plataforma não envia requisição sem credencial);caindo para 'local'
 ```
 
 E o número de acertos de cache lido em `GET /v1/metricas`, no campo
 `cache.acertos`. Precisa ser no mínimo 2:
 
 ```
-ACERTOS_DE_CACHE: PREENCHER
+ACERTOS_DE_CACHE: 8
 ```
 
 ---

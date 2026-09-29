@@ -270,6 +270,32 @@ services:
   # verdade. Faça a mesma pergunta três vezes e leia
   # `curl localhost:4000/v1/metricas`.
 
+  ai-gateway:
+    build: ./servicos/ai-gateway
+    environment:
+      LOGITECH_IA_ESTRATEGIA: preferir-remoto
+      LOGITECH_IA_REMOTA_URL: https://api.openai.com/v1/chat/completions
+      # Vazia na sala de aula: é isto que faz o fallback acontecer de
+      # verdade, em vez de encenado. Preencher no .env liga o caminho remoto
+      # sem tocar em uma linha de código.
+      LOGITECH_IA_REMOTA_CHAVE: ${LOGITECH_IA_REMOTA_CHAVE:-}
+      LOGITECH_IA_OLLAMA_URL: http://host.docker.internal:11434
+      LOGITECH_IA_MODELO_LOCAL: ${LOGITECH_IA_MODELO_LOCAL:-qwen2.5:1.5b}
+      LOGITECH_IA_LIMITE_POR_MINUTO: "30"
+    ports:
+      - "4000:4000"
+    networks:
+      - logitech-net
+    mem_limit: 256m
+    extra_hosts:
+      # O Ollama roda no host, não é serviço da plataforma. No Docker
+      # Desktop este nome já existe; no Linux (o caso do Codespace) ele só
+      # existe se for declarado aqui.
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:4000/health"]
+
   # =====================================================================
   # PASSO 5: os oito de pé, e todos saudáveis
   # =====================================================================
