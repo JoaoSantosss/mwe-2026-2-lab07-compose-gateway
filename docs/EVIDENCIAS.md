@@ -84,7 +84,7 @@ docker compose config | grep -A5 'painel:' | grep volumes
 O primeiro comando precisa dizer `http`. O segundo não pode devolver nada.
 
 ```
-PAINEL_LE_ARQUIVO: PREENCHER
+PAINEL_LE_ARQUIVO: não
 ```
 
 Escreva `não` quando as duas condições estiverem cumpridas.

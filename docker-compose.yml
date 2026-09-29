@@ -211,6 +211,38 @@ services:
   # trocou de endereço. A prova está em `curl localhost:3000/health`: o campo
   # `fonte` precisa dizer `http`.
 
+  coletor:
+    build: ./servicos/coletor
+    environment: 
+      LOGITECH_DADOS: /dados/telemetria.jsonl
+    volumes: 
+      - logitech-telemetria:/dados
+    ports: 
+      - 8081/udp
+      - 8082/tcp
+    networks: 
+      - logitech-net
+    mem_limit: 96m
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8082/health"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  
+  painel:
+    build: ./servicos/painel
+    environment:
+      LOGITECH_TELEMETRIA_URL: http://coletor:8082/telemetria
+    ports: 
+      - "3000:3000"
+    networks: 
+      - logitech-net
+    mem_limit: 128m
+    depends_on: 
+      coletor:
+        condition: service_healthy
+
   # =====================================================================
   # PASSO 4: o ponto único de entrada de IA
   # =====================================================================
