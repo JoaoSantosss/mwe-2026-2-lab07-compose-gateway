@@ -134,17 +134,17 @@ docker stats --no-stream --format '{{.Name}} {{.MemUsage}}'
 ```
 
 ```
-TEMPO_ATE_TODOS_SAUDAVEIS_S: PREENCHER
-MEMORIA_TOTAL_MB: PREENCHER
-MEMORIA_MAIOR_CONSUMIDOR_MB: PREENCHER
-QUAL_O_MAIOR_CONSUMIDOR: PREENCHER
+TEMPO_ATE_TODOS_SAUDAVEIS_S: 25
+MEMORIA_TOTAL_MB: 394
+MEMORIA_MAIOR_CONSUMIDOR_MB: 80
+QUAL_O_MAIOR_CONSUMIDOR: logitech-pedidos-1
 ```
 
 E a arquitetura em que você mediu (`uname -m` e onde rodou), porque o número
 sozinho não diz nada:
 
 ```
-ONDE_MEDI: PREENCHER
+ONDE_MEDI: x86_64
 ```
 
 ---

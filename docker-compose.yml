@@ -81,11 +81,9 @@ services:
       - logitech-net
     mem_limit: 256m
     healthcheck:
+      <<: *saude
       test: ["CMD-SHELL", "pg_isready -U logitech -d logitech"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
+      
     # Repare que o banco não publica porta nenhuma no host: ele só é
     # alcançável de dentro da rede da plataforma. É de propósito.
     #
@@ -116,6 +114,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
     #
     # TODO-1b: troque o `depends_on` acima pela forma longa, com condição:
     #     depends_on:
@@ -164,6 +165,9 @@ services:
     networks:
       - logitech-net          # sem isso ele nao enxerga ninguem
     mem_limit: 256m
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:5080/health"]
 
   frete:
     build: ./servicos/frete          # a pasta do servico
@@ -172,6 +176,9 @@ services:
     networks:
       - logitech-net          # sem isso ele nao enxerga ninguem
     mem_limit: 192m
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8000/health"]
 
   notificacoes:
     build: ./servicos/notificacoes          # a pasta do servico
@@ -180,6 +187,9 @@ services:
     networks:
       - logitech-net          # sem isso ele nao enxerga ninguem
     mem_limit: 128m
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3001/health"]
 
   # =====================================================================
   # PASSO 3: telemetria, e a dívida da ADR-002 sendo paga
@@ -224,11 +234,8 @@ services:
       - logitech-net
     mem_limit: 96m
     healthcheck:
+      <<: *saude
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8082/health"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
   
   painel:
     build: ./servicos/painel
@@ -242,6 +249,9 @@ services:
     depends_on: 
       coletor:
         condition: service_healthy
+    healthcheck:
+      <<: *saude
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/health"]
 
   # =====================================================================
   # PASSO 4: o ponto único de entrada de IA
