@@ -66,7 +66,7 @@ docker compose exec pedidos wget -qO- http://frete:8000/health
 Cole a resposta em uma linha:
 
 ```
-DNS_INTERNO: PREENCHER
+DNS_INTERNO: {"status":"ok","servico":"frete","uptime_s":101,"modalidades":["economico","expresso","refrigerado"]}
 ```
 
 ---

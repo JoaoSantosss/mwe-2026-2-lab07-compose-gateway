@@ -155,6 +155,32 @@ services:
   # A segunda prova o DNS interno: `frete` é um nome que só existe dentro da
   # rede da plataforma.
 
+  faturamento:
+    build: ./servicos/faturamento          # a pasta do servico
+    environment:
+      LOGITECH_DB_URL: Host=postgres;Port=5432;Database=logitech;Username=logitech;Password=${LOGITECH_DB_PASSWORD}
+    ports: 
+      - "5080:5080"                # a porta do contrato, mesma no host
+    networks:
+      - logitech-net          # sem isso ele nao enxerga ninguem
+    mem_limit: 256m
+
+  frete:
+    build: ./servicos/frete          # a pasta do servico
+    ports: 
+      - "8000:8000"                # a porta do contrato, mesma no host
+    networks:
+      - logitech-net          # sem isso ele nao enxerga ninguem
+    mem_limit: 192m
+
+  notificacoes:
+    build: ./servicos/notificacoes          # a pasta do servico
+    ports: 
+      - "3001:3001"                # a porta do contrato, mesma no host
+    networks:
+      - logitech-net          # sem isso ele nao enxerga ninguem
+    mem_limit: 128m
+
   # =====================================================================
   # PASSO 3: telemetria, e a dívida da ADR-002 sendo paga
   # =====================================================================
