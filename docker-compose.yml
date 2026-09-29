@@ -80,6 +80,12 @@ services:
     networks:
       - logitech-net
     mem_limit: 256m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U logitech -d logitech"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     # Repare que o banco não publica porta nenhuma no host: ele só é
     # alcançável de dentro da rede da plataforma. É de propósito.
     #
@@ -108,7 +114,8 @@ services:
     # primeira subida. Ela espera o container do postgres existir, não o
     # PostgreSQL aceitar conexão.
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     #
     # TODO-1b: troque o `depends_on` acima pela forma longa, com condição:
     #     depends_on:

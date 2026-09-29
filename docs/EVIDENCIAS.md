@@ -28,7 +28,12 @@ morrer. É a resposta da Pergunta de Verificação 1 provada na sua máquina, n�
 afirmada em slide.
 
 ```
-PEDIDOS_SEM_HEALTHCHECK: PREENCHER
+PEDIDOS_SEM_HEALTHCHECK: 
+
+pedidos-1  | === LogiTech Enterprise - Serviço de Pedidos ===
+pedidos-1  | banco: jdbc:postgresql://postgres:5432/logitech
+pedidos-1  | [FATAL] o banco de dados não aceitou a conexão: Connection to postgres:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+pedidos-1  | [FATAL] o serviço de pedidos não sobe sem banco. Encerrando com código 1.
 ```
 
 Depois de preencher os `TODO-1a` e `TODO-1b`, meça quanto tempo o
